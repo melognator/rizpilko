@@ -1,0 +1,463 @@
+* {
+  margin: 0;
+  color: white;
+  font-family: 'Ink Free', 'Roboto', sans-serif;
+}
+
+.dot {
+  height: 15px;
+  width: 15px;
+  background-color: white;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+input[type="text"]
+{
+    background: rgba(0, 0, 0, 0);
+    border: none;
+    outline: none;
+}
+
+.pomodoro-input {
+  text-align: right;
+}
+
+#categoria-input {
+  text-align: center;
+}
+
+.baja {
+  background-color: #3CB45A;
+}
+
+.media {
+  background-color: #FEAA1E;
+}
+
+.alta {
+  background-color: #FE4245;
+}
+
+body {
+  background-color: black
+}
+
+img {
+  width: 50px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #32A0FE;
+}
+
+p {
+  font-size: 24px;
+}
+
+.ink-font {
+  font-family: 'Ink Free';
+  font-size: 24px;
+  color: white;
+}
+
+.gray-font {
+  color: #BBB;
+}
+
+#sidebarText {
+  font-size: 18px;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 26px;
+}
+
+.centered-tomato {
+  /* position: absolute; */
+  top: 55%;
+  left: 50%;
+  transform: translate(-55%, -50%);
+}
+
+.tomato-img {
+  width: 100px;
+  height: 113.5333px;
+  background-size: 100px 113.5333px;
+  display: inline-block;
+  background-image: url('/static/assets/tomate-iniciar.png');
+}
+
+.tomato-img:hover {
+  background-image: url('/static/assets/tomate-iniciar-hover.png');
+}
+
+.tomato-img-clicked {
+  width: 100px;
+  height: 113.5333px;
+  background-size: 100px 113.5333px;
+  display: inline-block;
+  background-image: url('/static/assets/tomate-detener.png');
+}
+
+.tomato-img-clicked:hover {
+  background-image: url('/static/assets/tomate-detener-hover.png');
+}
+
+
+.loader {
+  border: 5px solid black;
+  border-top: 5px solid white; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+span {
+  white-space:nowrap;
+}
+
+pre {
+  font-family: 'Ink Free', 'Roboto', sans-serif;
+  font-size: 24px;
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  overflow: hidden;
+}
+
+.hover-blue:hover, .filter-blue {
+  filter: invert(61%) sepia(43%) saturate(4758%) hue-rotate(185deg) brightness(99%) contrast(102%);
+}
+
+.hover-green:hover, .filter-green {
+  filter: invert(57%) sepia(60%) saturate(481%) hue-rotate(83deg) brightness(92%) contrast(88%);
+}
+
+.hover-yellow:hover, .filter-yellow {
+  filter: invert(31%) sepia(99%) saturate(1902%) hue-rotate(337deg) brightness(105%) contrast(100%);
+}
+
+.hover-red:hover, .filter-red {
+  filter: invert(80%) sepia(24%) saturate(5053%) hue-rotate(343deg) brightness(102%) contrast(99%);
+}
+
+.filter-white {
+  filter: invert(100%) sepia(66%) saturate(2%) hue-rotate(102deg) brightness(113%) contrast(100%);
+}
+
+.flex-navbar {
+    flex: 0 0 100px;
+    background-color: #0D0D0D;
+}
+
+.change-lang img {
+  width: 50px;
+}
+
+.flex-sidebar {
+  flex: 0 0 250px;
+  background-color: #0D0D0D;
+  display: flex;
+}
+
+.flex-config {
+  flex: 0 0 auto;
+  display: flex;
+}
+
+@media (max-width: 992px) {
+  .flex-sidebar {
+    display: none !important;
+  }
+}
+
+.roboto-font {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+.roboto-font-bold {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.main-wrapper {
+  height: 100vh;  
+}
+
+.section-heading {
+  display: table;
+  white-space: nowrap;
+}
+.section-heading:before {
+  background: linear-gradient(to bottom, white, white) no-repeat left center / 93% 1px;
+  content: "";
+  display: table-cell;
+  width: 50%;
+}
+.section-heading:after {
+  background: linear-gradient(to bottom, white, white) no-repeat right center / 93% 1px;
+  content: "";
+  display: table-cell;
+  width: 50%;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+.gray-bg {
+  background-color: #1A1A1A;
+}
+
+input[type='checkbox'] {
+    -webkit-appearance:none;
+    width:25px;
+    height:25px;
+    background:transparent;
+    border-radius:0px;
+    border:1px solid white;
+    box-shadow: none; 
+    outline: none;
+}
+
+input[type='checkbox']:checked {
+    background: transparent;
+    border:1px solid white;
+    box-shadow: none; 
+    outline: none;
+}
+
+input[type='checkbox']:not(:checked) {
+    background: transparent;
+    border:1px solid white;
+    box-shadow: none; 
+    outline: none;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#pomodoroTitle {
+  font-size: 32px;
+}
+
+#pomodoroTimerSpan {
+  font-size: 54px;
+}
+
+#pomodoroNext {
+  font-size: 20px;
+}
+
+@media (max-width: 767.98px) {
+  .roboto-font {
+    font-size: 12px;
+  }
+  .dot {
+    height: 11.25px;
+    width: 11.25px;
+  }
+  .roboto-font-bold {
+    font-size: 12px;
+  }
+  pre {
+    font-size: 18px;
+  }
+  input[type='checkbox'] {
+    width:18px;
+    height:18px;
+  }
+  p {
+    font-size: 18px;
+  }
+  .tomato-img {
+    width: 75px;
+  }
+  .ink-font {
+    font-size: 18px;
+  }
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  #navbar img {
+    width: 37.5px;
+  }
+
+  .flex-navbar {
+    flex: 0 0 75px;
+  }
+
+  #sidebarText {
+    font-size: 14px;
+  }
+
+  .change-lang img {
+    width: 37.5px;
+  }
+
+  #pomodoroTitle {
+    font-size: 24px;
+  }
+
+  #pomodoroTimerSpan {
+    font-size: 40.5px;
+  }
+
+  #pomodoroNext {
+    font-size: 15px;
+  }
+
+  .tomato-img {
+    width: 75px;
+    height: 85.15px;
+    background-size: 75px 85.15px;
+  }
+
+  .tomato-img-clicked {
+    width: 75px;
+    height: 85.15px;
+    background-size: 75px 85.15px;
+  }
+
+
+}
+
+@media (max-width: 575.98px) {
+  .roboto-font {
+    font-size: 8px;
+  }
+  .roboto-font-bold {
+    font-size: 8px;
+  }
+  .dot {
+    height: 7.5px;
+    width: 7.5px;
+  }
+  pre {
+    font-size: 12px;
+  }
+  input[type='checkbox'] {
+    width:14px;
+    height:14px;
+  }
+  p {
+    font-size: 12px;
+  }
+  .tomato-img {
+    width: 50px;
+  }
+  .ink-font {
+    font-size: 12px;
+  }
+  h1 {
+    font-size: 16px;
+  }
+
+  h2 {
+    font-size: 14px;
+  }
+  
+  #navbar img {
+    width: 25px;
+  }
+
+  .flex-navbar {
+    flex: 0 0 50px;
+  }
+
+  #sidebarText {
+    font-size: 10px;
+  }
+
+  .change-lang img {
+    width: 25px;
+  }
+
+  #pomodoroTitle {
+    font-size: 16px;
+  }
+
+  #pomodoroTimerSpan {
+    font-size: 27px;
+  }
+
+  #pomodoroNext {
+    font-size: 10px;
+  }
+
+  .tomato-img {
+    width: 50px;
+    height: 56.767px;
+    background-size: 50px 56.767px;
+  }
+
+  .tomato-img-clicked {
+    width: 50px;
+    height: 56.767px;
+    background-size: 50px 56.767px;
+  }
+
+}
+
+.abm-popup-background {
+  background-color: rgba(0, 0, 0, 0.851);
+  border: 1px solid white;
+}
+
+.transparent-background {
+  background: rgba(0, 0, 0, 0);
+  border: none;
+  outline: none;
+}
+
+.black-font {
+  color: black;
+}
+
+.filter-gray {
+  filter: grayscale(90%);
+}
+
+.filter-gray:hover {
+  filter: grayscale(25%);
+}
+
+.filter-none {
+  filter: grayscale(0%);
+}

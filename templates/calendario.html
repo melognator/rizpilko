@@ -1,0 +1,209 @@
+<div id="main-content" class="col nopadding overflow-auto">
+  <h1 class="text-center section-heading p-2 p-sm-3 p-md-4 gray-bg unselectable">Calendario</h1>
+  
+  <!-- Calendario -->
+  <div class="container-fluid">
+
+    {% set tareas_sin_completar = [] %}
+    {% set tareas_completadas = [] %}
+    {% set prioridades = ['baja', 'media', 'alta'] %}
+    {% for tarea in tareas %}
+      {% if tarea[6] == 0 %}
+        {% set tmp = tareas_sin_completar.append(tarea) %}
+      {% else %}
+       {% set tmp = tareas_completadas.append(tarea) %}
+      {% endif %}
+    {% endfor %}
+
+    <div class="row mt-2 mt-sm-3 mt-md-4">
+      <div class="col text-center">
+        <h2 class="section-heading unselectable">Eventos / tareas programadas</h2>
+        <div id="tareas-sin-completar">
+          {% set i = [0] %}
+          {% for tarea in tareas_sin_completar %}
+            <!-- Evento -->
+            <div id="rowTarea{{i[0]}}" class="row gray-bg m-2 m-sm-3 m-md-4" data-bs-toggle="modal" data-bs-target="#modalTarea{{i[0]}}">
+              <div class="col p-0">
+                <div class="form-check d-flex align-items-center p-0">
+                  <input onclick="marcarCompletada({{i[0]}}, 'calendario'); closeModal('calendario');" class="form-check-input rounded-0 m-2 m-sm-2 m-md-3" type="checkbox" value="">
+                  <label class="form-check-label" for="homeTarea{{i[0]}}">
+                    <span class="ink-font m-0 unselectable">{{ tarea[3] }}</span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-4 m-2 m-sm-2 m-md-3 p-0 d-flex flex-row-reverse align-items-center">
+                <span class="{{ prioridades[tarea[5]] }} dot mb-0 unselectable d-inline-block"></span>
+                <span class="roboto-font mb-0 unselectable d-inline-block me-2 me-sm-3 me-md-4 ">{{ tarea[8] }}</span>
+              </div>
+            </div>
+            <input id="tareaID{{i[0]}}" type="hidden" value="{{tarea[0]}}"></input>
+            <!--  -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalTarea{{i[0]}}" tabindex="-1" role="dialog" aria-labelledby="titleTarea" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+              <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content abm-popup-background">
+                  <button type="button" class="btn-close p-0 ms-auto me-1 shadow-none" data-bs-dismiss="modal" aria-label="Close">
+                      <span class="unselectable roboto-font boton-cerrar" aria-hidden="true">&times;</span>
+                    </button>
+                  <div class="modal-header ms-2 ms-sm-3 ms-md-4 me-2 me-sm-3 me-md-4 mb-1 mb-md-2 p-0 d-flex flex-column align-items-baseline">
+                    <input id="titleTarea{{i[0]}}" type="text" maxlength="64" size="64" class="m-0 ink-font" value="{{ tarea[3] }}" placeholder="Título de la tarea...">
+                    <div id="prioridadTarea{{i[0]}}" class="d-flex flex-row align-items-center">
+                      <span class="ink-font m-0 unselectable me-1 me-md-2">Prioridad:</span>
+                      
+                      <a href="javascript:seleccionarPrioridad('prioridadTarea{{i[0]}}', 0);" class="{{ prioridades[0] }} {% if tarea[5] != 0 %} filter-gray {% endif %} dot mb-0 unselectable d-inline-block ms-1"></a>
+                      <a href="javascript:seleccionarPrioridad('prioridadTarea{{i[0]}}', 1);" class="{{ prioridades[1] }} {% if tarea[5] != 1 %} filter-gray {% endif %}  dot mb-0 unselectable d-inline-block ms-1"></a>
+                      <a href="javascript:seleccionarPrioridad('prioridadTarea{{i[0]}}', 2);" class="{{ prioridades[2] }} {% if tarea[5] != 2 %} filter-gray {% endif %}  dot mb-0 unselectable d-inline-block ms-1"></a>
+                    </div>
+                    <div class="d-flex flex-row align-items-center mb-1 mb-md-2">
+                      <span class="ink-font m-0 unselectable me-1 me-md-2">Categoría: </span>
+                      <select id="categoriaTarea{{i[0]}}" class="ms-1 p-0 transparent-background ink-font shadow-none rounded-0" aria-label="">
+                        {% set j = [0] %}
+                        {% for categoria in categorias %}
+                          {% if categoria[0] == tarea[2] %}
+                            <option class="black-font" value="{{ j[0] }}" selected>{{ categoria[2] }}</option>
+                          {% else %}
+                            <option class="black-font" value="{{ j[0] }}">{{ categoria[2] }}</option>
+                          {% endif %}
+                          {% if j.append(j.pop() + 1) %}{% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="modal-body ms-2 ms-sm-3 ms-md-4 me-2 me-sm-3 me-md-4 mb-1 mb-md-2 p-0 d-flex flex-column align-items-baseline">
+                    <span class="ink-font m-0 unselectable me-1 me-md-2">Descripción: </span>
+                    <textarea class="w-100 m-0 shadow-none rounded-0 unselectable ink-font transparent-background" id="descTarea{{i[0]}}" rows="3" placeholder="Escribe aquí una descripción...">{{ tarea[4] }}</textarea>
+                    <div class="d-flex flex-row align-items-center">
+                      <span class="ink-font m-0 unselectable me-1 me-md-2">Fecha comienzo:</span>
+                      <input id="fechaComienzoTarea{{i[0]}}" type="text" maxlength="64" size="24" class="m-0 roboto-font" value="{{ tarea[8] }}" placeholder="Ejemplo: 24/10/2022 15:20:00">
+                    </div>
+                    <div class="d-flex flex-row align-items-center">
+                      <span class="ink-font m-0 unselectable me-1 me-md-2">Frecuencia:</span>
+                      <input id="frecuenciaTarea{{i[0]}}" type="text" maxlength="64" size="24" class="m-0 roboto-font" value="{{ tarea[7] }}" placeholder="Ejemplos: 7d, 1d, 2d (WIP)">
+                    </div>
+                  </div>
+                  <div class="modal-footer ms-2 ms-sm-3 ms-md-4 me-2 me-sm-3 me-md-4 mb-1 mb-md-2 p-0 d-flex flex-column align-items-baseline">
+                    <a href="javascript:guardarEvento({{i[0]}});" class="btn btn-outline-light ms-0 me-0 mb-1 mb-md-2 mt-2 mt-md-3 roboto-font rounded-0 p-1 p-md-2 shadow-none w-100" aria-label="Close">Guardar evento</a>
+                    <a href="javascript:marcarCompletada({{i[0]}}, 'calendario');" class="btn btn-outline-light ms-0 me-0 mb-1 mb-md-2 roboto-font rounded-0 p-1 p-md-2 shadow-none w-100" aria-label="Close">Marcar evento como completado</a>
+                    <a href="javascript:eliminarTarea({{i[0]}}, 'calendario');" class="btn btn-danger ms-0 me-0 mb-2 mb-md-3 roboto-font rounded-0 p-1 p-md-2 shadow-none w-100" aria-label="Close">Eliminar evento</a>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% if i.append(i.pop() + 1) %}{% endif %} {# increment count by 1 #}
+          {% endfor %}
+
+          
+
+        </div>
+
+          <!-- Nuevo Evento -->
+          <div class="row gray-bg m-2 m-sm-3 m-md-4">
+            <div class="col p-0">
+              <div class="form-check d-flex align-items-center p-0">
+                <input class="form-check-input rounded-0 m-2 m-sm-2 m-md-3" type="checkbox" value="" disabled>
+                <input id="evento-input" type="text" maxlength="64" size="30" class="p-1 m-0 ink-font" value="" placeholder="Agregar nuevo evento...">
+              </div>
+            </div>
+          </div>
+          <!--  -->
+      </div>
+    </div>
+
+
+
+    <div class="row mt-2 mt-sm-3 mt-md-4">
+      <div class="col text-center">
+        <h2 class="section-heading unselectable">Eventos pasados</h2>
+        <div id="tareas-completadas">
+          {% for tarea in tareas_completadas %}
+            <!-- Evento -->
+            <div id="rowTarea{{i[0]}}" class="row gray-bg m-2 m-sm-3 m-md-4" data-bs-toggle="modal" data-bs-target="#modalTarea{{i[0]}}">
+              <div class="col p-0">
+                <div class="form-check d-flex align-items-center p-0">
+                  <input onclick="desmarcarCompletada({{i[0]}}, 'calendario'); closeModal('calendario');" class="form-check-input rounded-0 m-2 m-sm-2 m-md-3" type="checkbox" value="" checked>
+                  <label class="form-check-label" for="homeTarea{{i[0]}}">
+                    <span class="ink-font m-0 unselectable">{{ tarea[3] }}</span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-4 m-2 m-sm-2 m-md-3 p-0 d-flex flex-row-reverse align-items-center">
+                <span class="{{ prioridades[tarea[5]] }} dot mb-0 unselectable d-inline-block"></span>
+                <span class="roboto-font mb-0 unselectable d-inline-block me-2 me-sm-3 me-md-4 ">{{ tarea[8] }}</span>
+              </div>
+            </div>
+            <input id="tareaID{{i[0]}}" type="hidden" value="{{tarea[0]}}"></input>
+            <!--  -->
+
+            <!-- Modal -->
+            <div class="modal fade " id="modalTarea{{i[0]}}" tabindex="-1" role="dialog" aria-labelledby="titleTarea" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+              <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content abm-popup-background">
+                  <button type="button" class="btn-close p-0 ms-auto me-1 shadow-none" data-bs-dismiss="modal" aria-label="Close">
+                      <span class="unselectable roboto-font boton-cerrar" aria-hidden="true">&times;</span>
+                    </button>
+                  <div class="modal-header ms-2 ms-sm-3 ms-md-4 me-2 me-sm-3 me-md-4 mb-1 mb-md-2 p-0 d-flex flex-column align-items-baseline">
+                    <input id="titleTarea{{i[0]}}" type="text" maxlength="64" size="64" class="m-0 ink-font" value="{{ tarea[3] }}" placeholder="Título de la tarea...">
+                    <div id="prioridadTarea{{i[0]}}" class="d-flex flex-row align-items-center">
+                      <span class="ink-font m-0 unselectable me-1 me-md-2">Prioridad:</span>
+                      
+                      <a href="javascript:seleccionarPrioridad('prioridadTarea{{i[0]}}', 0);" class="{{ prioridades[0] }} {% if tarea[5] != 0 %} filter-gray {% endif %} dot mb-0 unselectable d-inline-block ms-1"></a>
+                      <a href="javascript:seleccionarPrioridad('prioridadTarea{{i[0]}}', 1);" class="{{ prioridades[1] }} {% if tarea[5] != 1 %} filter-gray {% endif %}  dot mb-0 unselectable d-inline-block ms-1"></a>
+                      <a href="javascript:seleccionarPrioridad('prioridadTarea{{i[0]}}', 2);" class="{{ prioridades[2] }} {% if tarea[5] != 2 %} filter-gray {% endif %}  dot mb-0 unselectable d-inline-block ms-1"></a>
+                    </div>
+                    <div class="d-flex flex-row align-items-center mb-1 mb-md-2">
+                      <span class="ink-font m-0 unselectable me-1 me-md-2">Categoría: </span>
+                      <select id="categoriaTarea{{i[0]}}" class="ms-1 p-0 transparent-background ink-font shadow-none rounded-0" aria-label="">
+
+                        {% set j = [0] %}
+                        {% for categoria in categorias %}
+                          {% if categoria[0] == tarea[2] %}
+                            <option class="black-font" value="{{ j[0] }}" selected>{{ categoria[2] }}</option>
+                          {% else %}
+                            <option class="black-font" value="{{ j[0] }}">{{ categoria[2] }}</option>
+                          {% endif %}
+                          {% if j.append(j.pop() + 1) %}{% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="modal-body ms-2 ms-sm-3 ms-md-4 me-2 me-sm-3 me-md-4 mb-1 mb-md-2 p-0 d-flex flex-column align-items-baseline">
+                    <span class="ink-font m-0 unselectable me-1 me-md-2">Descripción: </span>
+                    <textarea class="w-100 m-0 shadow-none rounded-0 unselectable ink-font transparent-background" id="descTarea{{i[0]}}" rows="3" placeholder="Escribe aquí una descripción...">{{ tarea[4] }}</textarea>
+                    <div class="d-flex flex-row align-items-center">
+                      <span class="ink-font m-0 unselectable me-1 me-md-2">Fecha comienzo:</span>
+                      <input id="fechaComienzoTarea{{i[0]}}" type="text" maxlength="64" size="24" class="m-0 roboto-font" value="{{ tarea[8] }}" placeholder="Ejemplo: 24/10/2022 15:20:00">
+                    </div>
+                    <div class="d-flex flex-row align-items-center">
+                      <span class="ink-font m-0 unselectable me-1 me-md-2">Frecuencia:</span>
+                      <input id="frecuenciaTarea{{i[0]}}" type="text" maxlength="64" size="24" class="m-0 roboto-font" value="{{ tarea[7] }}" placeholder="Ejemplo: 24/10/2022 15:20:00">
+                    </div>
+                  </div>
+                  <div class="modal-footer ms-2 ms-sm-3 ms-md-4 me-2 me-sm-3 me-md-4 mb-1 mb-md-2 p-0 d-flex flex-column align-items-baseline">
+                    <a href="javascript:guardarEvento({{i[0]}});" class="btn btn-outline-light ms-0 me-0 mb-1 mb-md-2 mt-2 mt-md-3 roboto-font rounded-0 p-1 p-md-2 shadow-none w-100" aria-label="Close">Guardar evento</a>
+                    <a href="javascript:desmarcarCompletada({{i[0]}}, 'calendario');" class="btn btn-outline-light ms-0 me-0 mb-1 mb-md-2 roboto-font rounded-0 p-1 p-md-2 shadow-none w-100" aria-label="Close">Desmarcar evento como completado</a>
+                    <a href="javascript:eliminarTarea({{i[0]}}, 'calendario');" class="btn btn-danger ms-0 me-0 mb-2 mb-md-3 roboto-font rounded-0 p-1 p-md-2 shadow-none w-100" aria-label="Close">Eliminar evento</a>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% if i.append(i.pop() + 1) %}{% endif %}
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <input id="cantidadTareas" type="hidden" value="{{i[0]}}"></input>
+  {% set listCat = [""] %}
+  {% for categoria in categorias %}
+    {% if listCat.append(listCat.pop() + categoria[2] + ",") %}{% endif %}
+  {% endfor %}
+  <input id="listaCategorias" type="hidden" value="{{listCat}}"></input>
+</div>
+ 
+ 

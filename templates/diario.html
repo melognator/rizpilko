@@ -1,0 +1,65 @@
+<div id="main-content" class="col nopadding overflow-auto">
+  <h1 class="text-center section-heading p-2 p-sm-3 p-md-4 gray-bg unselectable">Diario</h1>
+  
+  <!-- Diario -->
+  <div class="container-fluid">
+
+    {% set j = [0] %}
+    <div class="row mt-2 mt-sm-3 mt-md-4">
+      <div class="col text-center">
+        <h2 class="section-heading unselectable">Diario personal</h2>
+        <div id="categoria0">
+          {% for entrada in entradas %}
+              <!-- Entrada -->
+              <div id="rowEntrada{{j[0]}}" class="row gray-bg m-2 m-sm-3 m-md-4 ps-1 ps-md-2 pe-1 pe-md-2" data-bs-toggle="modal" data-bs-target="#modalEntrada{{j[0]}}">
+                <div class="col p-1 m-1 m-md-2 p-0 d-flex flex-row">
+                  <span class="ink-font m-0 unselectable">{{ entrada[2] }}</span>
+                </div>
+                <div class="col-4 m-1 m-md-2 p-1 d-flex flex-row-reverse align-items-center">
+                  <span class="roboto-font mb-0 unselectable d-inline-block">{{ entrada[3] }}</span>
+                </div>
+              </div>
+              <!--  -->
+
+              <!-- Modal -->
+              <div class="modal fade" id="modalEntrada{{j[0]}}" tabindex="-1" role="dialog" aria-labelledby="titleEntrada" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+                  <div class="modal-content abm-popup-background">
+                    <button type="button" class="btn-close p-0 ms-auto me-1 shadow-none" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="unselectable roboto-font boton-cerrar" aria-hidden="true">&times;</span>
+                      </button>
+                    <div class="modal-header ms-2 ms-sm-3 ms-md-4 me-2 me-sm-3 me-md-4 mb-1 mb-md-2 p-0 d-flex flex-column align-items-baseline">
+                      <input id="titleEntrada{{j[0]}}" type="text" maxlength="64" size="64" class="m-0 ink-font" value="{{ entrada[2] }}" placeholder="Título de la entrada...">
+                    </div>
+                    <div class="modal-body ms-2 ms-sm-3 ms-md-4 me-2 me-sm-3 me-md-4 mb-1 mb-md-2 p-0 d-flex flex-column align-items-baseline">
+                      <span class="ink-font m-0 unselectable me-1 me-md-2">Contenido: </span>
+                      <textarea class="w-100 m-0 shadow-none rounded-0 unselectable ink-font transparent-background" id="contenidoEntrada{{j[0]}}" rows="7" placeholder="Escribe aquí...">{{ entrada[4] }}</textarea>
+                    </div>
+                    <div class="modal-footer ms-2 ms-sm-3 ms-md-4 me-2 me-sm-3 me-md-4 mb-1 mb-md-2 p-0 d-flex flex-column align-items-baseline">
+                      <a href="javascript:guardarEntrada({{j[0]}});" class="btn btn-outline-light ms-0 me-0 mb-1 mb-md-2 mt-2 mt-md-3 roboto-font rounded-0 p-1 p-md-2 shadow-none w-100" aria-label="Close">Guardar entrada</a>
+                      <a href="javascript:eliminarEntrada({{j[0]}});" class="btn btn-danger ms-0 me-0 mb-2 mb-md-3 roboto-font rounded-0 p-1 p-md-2 shadow-none w-100" aria-label="Close">Eliminar entrada</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <input id="entradaID{{j[0]}}" type="hidden" value="{{ entrada[0] }}"></input>
+              {% if j.append(j.pop() + 1) %}{% endif %}
+          {% endfor %}
+        </div>
+        <!-- Nueva entrada -->
+        <div class="row gray-bg m-2 m-sm-3 m-md-4 ps-1 ps-md-2 pe-1 pe-md-2">
+          <div class="col p-0 m-1 m-md-2 d-flex flex-row">
+            <input id="entrada-input0" type="text" maxlength="64" size="42" class="p-1 m-0 ink-font" value="" placeholder="Agregar nueva entrada...">
+          </div>
+        </div>
+        <!--  -->  
+      </div>
+    </div>
+
+    <input id="cantidadEntradas" type="hidden" value="{{j[0]}}"></input>
+  
+
+  </div>
+</div>
+ 

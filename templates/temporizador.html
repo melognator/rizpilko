@@ -1,0 +1,139 @@
+<div id="main-content" class="col nopadding overflow-auto">
+  <h1 class="text-center section-heading p-2 p-sm-3 p-md-4 gray-bg unselectable">Gestor de tiempo</h1>
+  
+  <!-- Gestor de tiempo -->
+  <div class="container-fluid">
+
+    <!-- Actividades de Hoy --> 
+    <div class="row mt-2 mt-sm-3 mt-md-4">
+      <div class="col text-center">
+        <!-- Nueva Actividad -->
+          <div class="row gray-bg m-2 m-sm-3 m-md-4 ps-1 ps-md-2 pe-1 pe-md-2">
+            <div class="col p-0 m-1 m-md-2 p-0 d-flex flex-row">
+              <input id="actividad-input" type="text" maxlength="64" size="42" class="p-1 m-0 ink-font" value="" placeholder="Agregar nueva actividad...">
+            </div>
+            <div class="col-1 m-2 m-sm-2 m-md-3 p-0 d-flex flex-row-reverse align-items-center">
+              <span id="temporizadorSpan" class="roboto-font mb-0 unselectable d-inline-block">00:00:00</span>
+              <select id="categoriaActividad" class="me-2 me-sm-3 me-md-4 p-0 transparent-background roboto-font shadow-none rounded-0" aria-label="">
+                {% set j = [0] %}
+                {% for categoria in categorias %}
+                  <option class="black-font roboto-font" value="{{ categoria[0] }}">{{ categoria[2] }}</option>
+                  {% if j.append(j.pop() + 1) %}{% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <!--  -->
+          
+          <div class="row m-2 m-sm-3 m-md-4">
+            <div class="col p-0 me-2 me-sm-3 me-md-4">
+              <button id="botonDetener" onclick="detenerTimer();" type="button" class="w-100 btn btn-danger roboto-font rounded-0 p-1 p-md-2 shadow-none" disabled>Detener</button>
+            </div>
+            <div class="col p-0 ms-2 ms-sm-3 ms-md-4">
+              <button id="botonIniciar" onclick="iniciarTimer();" type="button" class="w-100 btn btn-success roboto-font rounded-0 p-1 p-md-2 shadow-none">Iniciar</button>
+            </div>
+          </div>
+
+        <h2 class="section-heading unselectable">Hoy</h2>
+
+        <div id="actividades">
+          {% for actividad in actividades %}
+            {% if (datetime.now()-datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S')).total_seconds() / 3600 < 24 %}
+              <!-- Actividad -->
+              <div class="row gray-bg m-2 m-sm-3 m-md-4 ps-1 ps-md-2 pe-1 pe-md-2">
+                <div class="col p-1 m-1 m-md-2 d-flex flex-row">
+                  <span class="ink-font m-0 unselectable">{{ actividad[3] }}</span>
+                </div>
+                <div class="col-6 m-2 m-sm-2 m-md-3 p-0 d-flex flex-row-reverse align-items-center">
+                  <span class="roboto-font mb-0 unselectable d-inline-block">{{ datetime.strptime(actividad[5], '%d/%m/%Y %H:%M:%S')-datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S') }}</span>
+                  <span class="roboto-font mb-0 unselectable me-2 me-sm-3 me-md-4 d-inline-block">{{ datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S').time() }} - {{ datetime.strptime(actividad[5], '%d/%m/%Y %H:%M:%S').time() }}</span>
+                  <span class="roboto-font mb-0 unselectable me-2 me-sm-3 me-md-4 d-inline-block">{% for categoria in categorias %}{% if categoria[0] == actividad[2] %}{{ categoria[2] }}{% endif %}{% endfor %}</span>
+                </div>
+              </div>
+              <!--  -->
+            {% endif %}
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Actividades de Esta semana -->
+    <div class="row mt-2 mt-sm-3 mt-md-4">
+      <div class="col text-center">
+        <h2 class="section-heading unselectable">Esta semana</h2>
+        <div id="actividadesSemana">
+          {% for actividad in actividades %}
+            {% if (datetime.now()-datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S')).total_seconds() / 3600 < 168 and (datetime.now()-datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S')).total_seconds() / 3600 > 24 %}
+              <!-- Actividad -->
+              <div class="row gray-bg m-2 m-sm-3 m-md-4 ps-1 ps-md-2 pe-1 pe-md-2">
+                <div class="col p-1 m-1 m-md-2 d-flex flex-row">
+                  <span class="ink-font m-0 unselectable">{{ actividad[3] }}</span>
+                </div>
+                <div class="col-6 m-2 m-sm-2 m-md-3 p-0 d-flex flex-row-reverse align-items-center">
+                  <span class="roboto-font mb-0 unselectable d-inline-block">{{ datetime.strptime(actividad[5], '%d/%m/%Y %H:%M:%S')-datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S') }}</span>
+                  <span class="roboto-font mb-0 unselectable me-2 me-sm-3 me-md-4 d-inline-block">{{ datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S').time() }} - {{ datetime.strptime(actividad[5], '%d/%m/%Y %H:%M:%S').time() }}</span>
+                  <span class="roboto-font mb-0 unselectable me-2 me-sm-3 me-md-4 d-inline-block">{% for categoria in categorias %}{% if categoria[0] == actividad[2] %}{{ categoria[2] }}{% endif %}{% endfor %}</span>
+                </div>
+              </div>
+              <!--  -->
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Actividades de Este mes -->
+    <div class="row mt-2 mt-sm-3 mt-md-4">
+      <div class="col text-center">
+        <h2 class="section-heading unselectable">Este mes</h2>
+        <div id="actividadesMes">
+          {% for actividad in actividades %}
+            {% if (datetime.now()-datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S')).total_seconds() / 3600 < 672 and (datetime.now()-datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S')).total_seconds() / 3600 > 168 %}
+              <!-- Actividad -->
+              <div class="row gray-bg m-2 m-sm-3 m-md-4 ps-1 ps-md-2 pe-1 pe-md-2">
+                <div class="col p-1 m-1 m-md-2 d-flex flex-row">
+                  <span class="ink-font m-0 unselectable">{{ actividad[3] }}</span>
+                </div>
+                <div class="col-6 m-2 m-sm-2 m-md-3 p-0 d-flex flex-row-reverse align-items-center">
+                  <span class="roboto-font mb-0 unselectable d-inline-block">{{ datetime.strptime(actividad[5], '%d/%m/%Y %H:%M:%S')-datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S') }}</span>
+                  <span class="roboto-font mb-0 unselectable me-2 me-sm-3 me-md-4 d-inline-block">{{ datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S').time() }} - {{ datetime.strptime(actividad[5], '%d/%m/%Y %H:%M:%S').time() }}</span>
+                  <span class="roboto-font mb-0 unselectable me-2 me-sm-3 me-md-4 d-inline-block">{% for categoria in categorias %}{% if categoria[0] == actividad[2] %}{{ categoria[2] }}{% endif %}{% endfor %}</span>
+                  
+                </div>
+              </div>
+              <!--  -->
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Actividades de ETC -->
+    <div class="row mt-2 mt-sm-3 mt-md-4">
+      <div class="col text-center">
+        <h2 class="section-heading unselectable">Anteriores</h2>
+        <div id="actividadesEtc">
+          {% for actividad in actividades %}
+            {% if (datetime.now()-datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S')).total_seconds() / 3600 > 672 %}
+              <!-- Actividad -->
+              <div class="row gray-bg m-2 m-sm-3 m-md-4 ps-1 ps-md-2 pe-1 pe-md-2">
+                <div class="col p-1 m-1 m-md-2 d-flex flex-row">
+                  <span class="ink-font m-0 unselectable">{{ actividad[3] }}</span>
+                </div>
+                <div class="col-6 m-2 m-sm-2 m-md-3 p-0 d-flex flex-row-reverse align-items-center">
+                  <span class="roboto-font mb-0 unselectable d-inline-block">{{ datetime.strptime(actividad[5], '%d/%m/%Y %H:%M:%S')-datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S') }}</span>
+                  <span class="roboto-font mb-0 unselectable me-2 me-sm-3 me-md-4 d-inline-block">{{ datetime.strptime(actividad[4], '%d/%m/%Y %H:%M:%S').time() }} - {{ datetime.strptime(actividad[5], '%d/%m/%Y %H:%M:%S').time() }}</span>
+                  <span class="roboto-font mb-0 unselectable me-2 me-sm-3 me-md-4 d-inline-block">{% for categoria in categorias %}{% if categoria[0] == actividad[2] %}{{ categoria[2] }}{% endif %}{% endfor %}</span>
+                </div>
+              </div>
+              <!--  -->
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+ 

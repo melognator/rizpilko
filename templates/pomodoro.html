@@ -1,0 +1,67 @@
+<div id="main-content" class="col d-flex flex-column nopadding overflow-auto">
+  <h1 class="text-center section-heading p-2 p-sm-3 p-md-4 gray-bg unselectable">Temporizador pomodoro</h1>
+  
+  <div id="pomodoroContainer" class="d-none container-fluid text-center" style="margin-top: 20vh; margin-bottom: 20vh">
+    <p id="pomodoroTitle" class="roboto-font m-0 unselectable">Pomodoro</p>
+    <p id="pomodoroTimerSpan" class="roboto-font m-0 unselectable">0:00:00</p>
+    <p id="pomodoroNext" class="roboto-font gray-font m-0 unselectable">Próximo: Descanso 05:00</p>
+  </div>
+
+  <!-- Temporizador pomodoro -->
+  <div id="pomodoroSelectorContainer" class="container-fluid" style="margin-top: 15vh; margin-bottom: 15vh">
+
+    
+    <!-- Duracion de cada pomodoro -->
+
+    <div class="row">
+      <div class="col p-0 m-2 m-sm-3 m-md-4 d-flex justify-content-center">
+        <div class="p-1 d-flex">
+          <span class="roboto-font m-0 unselectable">Duración de cada Pomodoro: </span>
+        </div>
+        <div class="d-flex align-content-center" style="">
+          <input id="duracionPomodoro" type="text" maxlength="3" size="1" class="p-1 roboto-font pomodoro-input " value="25" onkeypress="return onlyNumberKey(event)" >
+          <span class="roboto-font p-1 m-0 unselectable">minutos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Duracion de cada descanso -->
+
+    <div class="row">
+      <div class="col p-0 m-2 m-sm-3 m-md-4 d-flex justify-content-center">
+        <div class="p-1 d-flex">
+          <span class="roboto-font m-0 unselectable">Duración de cada descanso: </span>
+        </div>
+        <div class="d-flex align-content-center" style="">
+          <input id="duracionDescanso" type="text" maxlength="3" size="1" class="p-1 roboto-font pomodoro-input" value="5" onkeypress="return onlyNumberKey(event)" >
+          <span class="roboto-font p-1 m-0 unselectable">minutos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Duracion del descanso largo -->
+
+    <div class="row">
+      <div class="col p-0 m-2 m-sm-3 m-md-4 d-flex justify-content-center">
+        <div class="p-1 d-flex">
+          <span class="roboto-font m-0 unselectable">Duración del descanso largo: </span>
+        </div>
+        <div class="d-flex align-content-center" style="">
+          <input id="duracionDescansoLargo" type="text" maxlength="3" size="1" class="p-1 roboto-font pomodoro-input" value="15" onkeypress="return onlyNumberKey(event)">
+          <span class="roboto-font p-1 m-0 unselectable">minutos</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  
+
+  <div class="mt-auto text-center">
+    <a id="" href="javascript:startPomodoro();" class="">
+      <div class="tomato-img mb-3 mb-sm-4 mb-md-5"></div>
+    </a>
+  </div>
+
+</div>
+ 

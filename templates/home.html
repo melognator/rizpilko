@@ -1,0 +1,70 @@
+<div id="main-content" class="col nopadding overflow-auto">
+  <h1 class="text-center section-heading p-2 p-sm-3 p-md-4 gray-bg unselectable">Resumen del día</h1>
+  
+  <!-- Consejo del día -->
+  <div class="container-fluid">
+    <div class="row mt-2 mt-sm-3 mt-md-4">
+      <div class="col text-center">
+        <h2 class="section-heading unselectable">Consejo del día</h2>
+        <pre>{{consejo}}</pre>
+      </div>
+    </div>
+
+    {% set prioridades = ['baja', 'media', 'alta'] %}
+
+    <!-- Tareas de hoy -->
+    <div class="row mt-2 mt-sm-3 mt-md-4">
+      <div class="col">
+        <h2 class="text-center section-heading unselectable">Tareas de hoy</h2>
+        <div class="container-fluid p-0">  
+          <!-- Contenedor -->
+          <div id="contenedor_tareas">
+            <!-- Tareas recurrentes -->
+            {% for tarea in tareas_recurrentes %}
+              {% if tarea[6] == 0 %}
+                <!-- Tarea -->
+                <div class="row gray-bg m-2 m-sm-3 m-md-4">
+                  <div class="col p-0">
+                    <div class="form-check d-flex align-items-center p-0">
+                      <input class="form-check-input rounded-0 m-2 m-sm-2 m-md-3" type="checkbox" value="">
+                      <label class="form-check-label" for="home-tarea1">
+                        <span class="ink-font m-0 unselectable">{{ tarea[3] }}</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-4 m-2 m-sm-2 m-md-3 p-0 d-flex flex-row-reverse align-items-center">
+                    <span class="{{ prioridades[tarea[5]] }} dot mb-0 unselectable d-inline-block"></span>
+                  </div>
+                </div>
+                <!--  -->
+              {% endif %}
+              {% endfor %}
+
+              <!-- Tareas no recurrentes -->
+              {% for tarea in tareas_no_recurrentes %}
+                {% if tarea[6] == 0 %}
+                  <!-- Tarea -->
+                  <div class="row gray-bg m-2 m-sm-3 m-md-4">
+                    <div class="col p-0">
+                      <div class="form-check d-flex align-items-center p-0">
+                        <input class="form-check-input rounded-0 m-2 m-sm-2 m-md-3" type="checkbox" value="">
+                        <label class="form-check-label" for="home-tarea1">
+                          <span class="ink-font m-0 unselectable">{{ tarea[3] }}</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-4 m-2 m-sm-2 m-md-3 p-0 d-flex flex-row-reverse align-items-center">
+                      <span class="{{ prioridades[tarea[5]] }} dot mb-0 unselectable d-inline-block"></span>
+                    </div>
+                  </div>
+                  <!--  -->
+                {% endif %}
+              {% endfor %}
+          </div>
+        </div>
+      </div>  
+    </div>
+
+  </div>
+</div>
+ 
